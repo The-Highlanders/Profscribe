@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server/server.js",
     "dev": "webpack -d --watch",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "getoken": "curl -X GET --user d9f91b1a-0609-4120-8fbd-1d127551e85e:oCsV2y4D604V https://stream.watsonplatform.net/authorization/api/v1/token?url=https://stream.watsonplatform.net/speech-to-text/api"
   },
   "author": "",
   "license": "ISC",
@@ -30,6 +31,8 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "socket.io": "^1.7.3",
+    "watson-developer-cloud": "^2.28.1",
+    "wav": "^1.0.1",
     "webpack": "^2.4.1",
     "ws": "^2.2.3"
   }

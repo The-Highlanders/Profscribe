@@ -10,6 +10,18 @@ let bodyParser   	= require('body-parser');
 let session      	= require('express-session');
 let mongoose		= require('mongoose')
 let WebSocket 		= require('ws')
+var BinaryServer 	= require('binaryjs').BinaryServer;
+var wav           	= require('wav');
+let exec 			= require('child_process').exec;
+let fs 				= require('fs')
+
+var SpeechToTextV1 	= require('watson-developer-cloud/speech-to-text/v1');
+var speech_to_text	= new SpeechToTextV1 ({
+  username: 'd9f91b1a-0609-4120-8fbd-1d127551e85e',
+  password: 'oCsV2y4D604V'
+});
+
+require('events').EventEmitter.prototype._maxListeners = 100;
 
 
 /*instantiate our application*/
@@ -29,7 +41,6 @@ mongoose.connect(config.url, function(err){
 	}
 	console.log('connected to database')
 })
-
 
 /*global variables*/
 PORT = process.env.PORT || 3000
@@ -52,6 +63,9 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+app.set('view engine', 'ejs')
+app.set('views', __dirname + "/../client/views")
+
 // configure passport here
 require(__dirname + "/passport.js")(passport)
 
@@ -59,14 +73,25 @@ require(__dirname + "/passport.js")(passport)
 // routes for our actual views
 app.get('/', function(req, res){
 	if (req.isAuthenticated()){
-		return res.json({
-			you : "in nigga"
-		})
+
+		if (req.user._student){
+			// render the student view
+
+
+
+
+			res.render('student')
+		}
+		if (req.user._professor){
+			// render the professor view
+			res.render('professor')		
+		}
 	}
 	else {
 		return res.sendFile( path.resolve(__dirname + "/../", 'client/index.html') )
 	}
 })
+
 
 app.get('/login', function(req, res){
 	if (req.isAuthenticated()){
@@ -107,33 +132,119 @@ function test(req, res, next){
 }
 
 
-/*
-var token = config.token
-var wsURI = 'wss://stream.watsonplatform.net/speech-to-text/api/v1/recognize?watson-token=' +
-  token + '&model=es-ES_BroadbandModel';
 
 
-const ws = new WebSocket(wsURI, {
-  perMessageDeflate: false
+binaryServer = BinaryServer( {
+   port: 9001
 });
 
-ws.on('open', function open() {
- 	let message = {
-		'action': 'start',
-    	'content-type': 'audio/l16;rate=22050'
-  	}
+binaryServer.on('connection', function(client) {
 
- 	ws.send(JSON.stringify(message))
+
+  var fileWriter = new wav.FileWriter('output.wav', {
+    channels: 1,
+    sampleRate: 48000,
+    bitDepth: 16
+  });
+
+  //var data = [];
+  client.on('stream', function(stream, meta) {
+   	
+
+
+
+    stream.on('data', function(chunk){
+    	
+    	//console.log(chunk)
+    	
+
+    })
+
+
+	var params = {
+	  model: 'en-US_BroadbandModel',
+	  'content-type': 'audio/l16;rate=48000',
+	  continuous: true,
+	  'interim_results': true,
+	  'word_confidence': true,
+
+	};
+
+	var recognizeStream = speech_to_text.createRecognizeStream(params);
+	stream.pipe(recognizeStream)
+
+	// Pipe in the audio.
+	//fs.createReadStream( __dirname + '/../output.flac').pipe(recognizeStream);
+
+	// Pipe out the transcription to a file.
+	recognizeStream.pipe(fs.createWriteStream('transcription.txt'));
+
+	// Get strings instead of buffers from 'data' events.
+	recognizeStream.setEncoding('utf8');
+
+	// Listen for events.
+	recognizeStream.on('results', function(event) { onEvent('Results:', event); });
+	recognizeStream.on('data', function(event) { onEvent('Data:', event); });
+	recognizeStream.on('error', function(event) { onEvent('Error:', event); });
+	recognizeStream.on('close', function(event) { onEvent('Close:', event); });
+	recognizeStream.on('speaker_labels', function(event) { onEvent('Speaker_Labels:', event); });
+
+	// Displays events on the console.
+	function onEvent(name, event) {
+		if (name == "Error:"){
+			console.log(event)
+		}
+		if (name == "Results:"){
+
+			//console.log(event)
+
+			for (result in event.results){
+				//console.log(event.results[result])
+				for (alt in event.results[result].alternatives){
+					console.log(event.results[result].alternatives[alt].transcript)
+				}
+			}
+
+
+		}
+	};
+
+    //stream.pipe(fileWriter);
+
+    stream.on('end', function(stream, meta) {
+	      	
+	    fileWriter.end();
+	    console.log('stream has ended')
+
+	    exec('pwd', (error, stdout, stderr) => {
+		  if (error) {
+		    console.error(`exec error: ${error}`);
+		    return;
+		  }
+		  //console.log(`stdout: ${stdout}`);
+		  //console.log(`stderr: ${stderr}`);
+		});
+
+      	exec('ffmpeg -i output.wav output.flac', (error, stdout, stderr) => {
+		  if (error) {
+		    console.error(`exec error: ${error}`);
+		    return;
+		  }
+		  //console.log(`stdout: ${stdout}`);
+		  //console.log(`stderr: ${stderr}`);
+		});
+
+
+    });
+  });
 });
 
- ws.on('message', function incoming(message) {
-    console.log('received: %s', message);
- });
 
 
 
 
-*/
+
+
 
 
 /*we direct all our api calls to our /api routes */
