@@ -1,18 +1,38 @@
+/*npm includes*/
 let express = require('express')
-let app 	= express()
 let morgan 	= require('morgan')
+let path 	= require('path');
+
+/*instantiate our application*/
+let app 	= express()
 let http	= require('http').Server(app);
+let io 		= require('socket.io')(http);
+
+/*local includes*/
+let api 	= require(__dirname + "/api.js")
+let sio 	= require( __dirname + "/io.js")
+
+/*global variables*/
+PORT = process.env.PORT || 3000
 
 // make this our static directory
-app.use(express.static( __dirname + "/../client"))
-
+app.use(express.static( path.resolve(__dirname + "/../" , 'client/public')  ))
 app.use(morgan('dev'))
 
 app.get('/', function(req, res){
-	res.sendFile( __dirname + "/../client/index.html")
+	res.sendFile( path.resolve(__dirname + "/../", 'client/index.html') )
 })
 
+/*we direct all our api calls to our /api routes */
+app.use('/api', api)
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+/*we direct all oure socket.io calls to this function*/
+sio.use(io)
+
+
+
+
+
+http.listen( PORT , function(){
+  console.log('listening on 3000');
 });
