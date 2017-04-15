@@ -50,15 +50,33 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-
 // configure passport here
 require(__dirname + "/passport.js")(passport)
 
 
 // routes for our actual views
 app.get('/', function(req, res){
-	res.sendFile( path.resolve(__dirname + "/../", 'client/index.html') )
+	if (req.isAuthenticated()){
+		return res.json({
+			you : "in nigga"
+		})
+	}
+	else {
+		return res.sendFile( path.resolve(__dirname + "/../", 'client/index.html') )
+	}
 })
+
+app.post('/signup', passport.authenticate('local-signup', {
+        successRedirect : '/', // redirect to the secure profile section
+        failureRedirect : '/failure', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+}));
+
+ app.post('/login', passport.authenticate('local-login', {
+        successRedirect : '/', // redirect to the secure profile section
+        failureRedirect : '/failure', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+}));
 
 
 app.get('/logout', function(req, res) {

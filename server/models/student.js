@@ -2,11 +2,8 @@ let mongoose 	= require('mongoose')
 let Schema 		= mongoose.Schema
 
 let studentSchema = new Schema({
-    id 				: String,
- 	classes 		:[String],
- 	email 			: String,
- 	password 		: String
-});
+ 	classes : [String]
+})
 
 let studentModel = mongoose.model('Student', studentSchema);
 
