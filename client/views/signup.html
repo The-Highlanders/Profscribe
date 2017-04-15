@@ -18,7 +18,8 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
 
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/core.js"></script>
+ 
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -66,21 +67,35 @@
 
         <script type="text/javascript">
           
+
           $('#submit').click(function(event){
             event.preventDefault()
+            document.getElementById("submit").disabled = true
 
             data = {
-              email : $('#email').value,
-              password : $('#password').value,
+              email     : $('#email')[0].value,
+              password  : $('#password')[0].value,
+              student   : $('#student').is(':checked'),
+              professor : $('#professor').is(':checked'),
+
+            }
+
+            console.log(data)
+
+            function success(){
+              window.location = "/"
             }
 
             $.ajax({
                 type: "POST",
                 url: "/signup",
-                data: data,
-                success: success,
-                dataType: dataType
+                data: JSON.stringify(data),
+                contentType : 'application/json',
+                success : success
             })
+
+
+
           })
         </script>
 
