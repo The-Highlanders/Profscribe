@@ -43,7 +43,7 @@ module.exports = function(passport){
     			}
     			else {
     				// create a new account
-    				if (req.body.professor){
+    				if (req.body.professor == true){
 
     					let newAccount 			= new Account()
     					let newProfessor 		= new Professor()
@@ -61,7 +61,7 @@ module.exports = function(passport){
     						}
     					})
     				}
-    				else if (req.body.student){
+    				else if (req.body.student == true){
     					let newAccount 		= new Account()
     					let newProfessor 	= new Student
     					newAccount.email 	= req.body.email
@@ -97,6 +97,8 @@ module.exports = function(passport){
         passReqToCallback 	: true // allows us to pass back the entire request to the callback
   
     },function(req, email, password, done) {
+
+    	console.log(req.body)
     	Account.findOne({
     		email : req.body.email
     	}, function(err, user){
@@ -105,9 +107,11 @@ module.exports = function(passport){
     			return done(err)
     		}
     		if (!user){
+    			console.log('there is no user')
     			return done(null, false, req.flash('loginMessage', 'No user found.'))
     		}
-    		if (!user.validPassword(password)){
+    		if (!user.validPassword(req.body.password)){
+    			console.log('the password is wrong')
                 return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
     		}
 
