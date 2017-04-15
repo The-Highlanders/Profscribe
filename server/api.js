@@ -6,4 +6,12 @@ router.get('/', function(req, res){
 	})
 })
 
+router.post('/professor/cc', function(req, res){
+
+})
+
+
+
+
+
 module.exports = router

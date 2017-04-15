@@ -2,6 +2,13 @@
 let express = require('express')
 let morgan 	= require('morgan')
 let path 	= require('path');
+let passport = require('passport');
+let flash    = require('connect-flash');
+
+let cookieParser = require('cookie-parser');
+let bodyParser   = require('body-parser');
+let session      = require('express-session');
+
 
 /*instantiate our application*/
 let app 	= express()
@@ -22,6 +29,10 @@ app.use(morgan('dev'))
 app.get('/', function(req, res){
 	res.sendFile( path.resolve(__dirname + "/../", 'client/index.html') )
 })
+
+
+
+
 
 /*we direct all our api calls to our /api routes */
 app.use('/api', api)
