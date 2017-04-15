@@ -27,7 +27,7 @@ require('events').EventEmitter.prototype._maxListeners = 100;
 /*instantiate our application*/
 let app 		= express()
 let server 		= require('http').createServer(app);
-let wss 		= new WebSocket.Server({ server , port : 8080});
+let wss 		= new WebSocket.Server({ server , port : 8050});
 
 
 /*local includes*/
@@ -43,7 +43,7 @@ mongoose.connect(config.url, function(err){
 })
 
 /*global variables*/
-PORT = process.env.PORT || 3000
+PORT = process.env.PORT || 8051
 
 // make this our static directory
 app.use(express.static( path.resolve(__dirname + "/../" , 'client/public')  ))
