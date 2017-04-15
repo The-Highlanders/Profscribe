@@ -9641,9 +9641,6 @@ var App = function (_React$Component) {
 				_react2.default.createElement(_Landing2.default, null)
 			);
 		}
-	}, {
-		key: 'componentDidMount',
-		value: function componentDidMount() {}
 	}]);
 
 	return App;

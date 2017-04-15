@@ -28,6 +28,8 @@ module.exports = function(passport){
         passReqToCallback 	: true // allows us to pass back the entire request to the callback
     }, function(req, email, password, done){
 
+
+    	console.log('we in nigga')
     	process.nextTick(function(){
 
     		Account.findOne({

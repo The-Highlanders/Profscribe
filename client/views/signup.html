@@ -18,6 +18,8 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
 
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/core.js"></script>
+
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="stylesheet" href="css/normalize.css">
@@ -33,36 +35,61 @@
 <!-- The above form looks like this -->
     
     </div>
-    <div class="container">
+    <div class="container" style="margin-top : 10%">
     <!-- Forms -->
-    <div class="docs-section" id="forms">
-      <h6 class="docs-header">Create an account</h6>
-      <p>If you are a first time user, please enter your school email in order to create an account </p>
-      <div class="docs-example docs-example-forms">
-        <form>
-          <div class="row">
-            <div class="six columns">
-              <label for="exampleEmailInput">Your email</label>
-              <input type="email" placeholder="test@ucr.edu" id="userEmail">
-            </div>
-            <div class="six columns">
-              <label for="examplePasswordInput">Password</label>
-              <input type="password" name="password" id="userPassword">
-            </div>
-          </div>
-          <label class="userStatus">
-            <input type="checkbox">
-            <span class="label-body">Professor</span> <br>
-            <input type="checkbox">
-            <span class="label-body">Student</span>
-          </label>
-          <input class="button-primary" type="submit" value="Submit">
+      <div class="docs-section" id="forms">
+      
+        <div class="docs-example docs-example-forms">
+
+
+        <form action="/signup" method="POST">
+          <fieldset>
+               
+            <label for="email">Email</label>
+            <input id="email" type="text" name="email" placeholder="you@domain.com" type="email">
+      
+            <label for="password">Password</label>
+            <input  id="password" type="password" name="password" type="password"> <br />
+            
+
+            <input id="student" type="radio" name="type" value="student" > Student<br>
+            <input id="professor" type="radio" name="type" value="professor"> Professor<br>
+
+
+            <input id="submit" type="submit" value="Submit" class="button button-primary">
+          </fieldset>
         </form>
-      </div>
+
+
+        <p>If you are a first time user, please enter your school email in order to create an account. If you already have an account, please <a href="/login">Login</a> </p>
+
+
+        <script type="text/javascript">
+          
+          $('#submit').click(function(event){
+            event.preventDefault()
+
+            data = {
+              email : $('#email').value,
+              password : $('#password').value,
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/signup",
+                data: data,
+                success: success,
+                dataType: dataType
+            })
+          })
+        </script>
+
+        </div>
       </div>
 <!-- Always wrap checkbox and radio inputs in a label and use a <span class="label-body"> inside of it -->
 
 <!-- Note: The class .u-full-width is just a utility class shorthand for width: 100% -->
+
 
 
 </body>
