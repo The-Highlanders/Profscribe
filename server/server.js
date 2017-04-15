@@ -133,6 +133,18 @@ function test(req, res, next){
 
 
 
+/*the web socket for the client*/
+wss.on('connection', function connection(ws) {
+  console.log('a client is connected')
+});
+wss.broadcast = function broadcast(data) {
+  wss.clients.forEach(function each(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(data);
+    }
+  });
+};
+
 
 binaryServer = BinaryServer( {
    port: 9001
@@ -202,6 +214,7 @@ binaryServer.on('connection', function(client) {
 				//console.log(event.results[result])
 				for (alt in event.results[result].alternatives){
 					console.log(event.results[result].alternatives[alt].transcript)
+					wss.broadcast(event.results[result].alternatives[alt].transcript)
 				}
 			}
 
@@ -250,8 +263,7 @@ binaryServer.on('connection', function(client) {
 /*we direct all our api calls to our /api routes */
 app.use('/api', api)
 
-/*we direct all oure socket.io calls to this function*/
-sio.use(wss)
+
 
 
 
