@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+
+import Nav from  "./Nav.jsx"
+
 class App extends React.Component {
 
 	render () {
 		return (
 				<div>
-					<h1>Hello from react</h1>
+					<Nav/>
 				</div>
 			)
  	}
 
  	componentDidMount(){
+ 		// this would go in our user o
  		var socket = io();
  	}
 

@@ -12,9 +12,10 @@ let mongoose		= require('mongoose')
 
 
 /*instantiate our application*/
-let app 	= express()
-let http	= require('http').Server(app);
-let io 		= require('socket.io')(http);
+let app 		= express()
+let http		= require('http').Server(app);
+let WebSocket 	= require('ws')
+let io 			= require('socket.io')(http);
 
 /*local includes*/
 let api 	= require(__dirname + "/api.js")
@@ -83,6 +84,36 @@ app.get('/logout', function(req, res) {
 	req.logout();
 	res.redirect('/');
 });
+
+
+
+
+
+var token = config.token
+var wsURI = 'wss://stream.watsonplatform.net/speech-to-text/api/v1/recognize?watson-token=' +
+  token + '&model=es-ES_BroadbandModel';
+
+
+const ws = new WebSocket(wsURI, {
+  perMessageDeflate: false
+});
+
+ws.on('open', function open() {
+ 	let message = {
+		'action': 'start',
+    	'content-type': 'audio/l16;rate=22050'
+  	}
+
+ 	ws.send(JSON.stringify(message))
+});
+
+ ws.on('message', function incoming(message) {
+    console.log('received: %s', message);
+ });
+
+
+
+
 
 
 
