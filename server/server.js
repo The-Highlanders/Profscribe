@@ -9,13 +9,14 @@ let cookieParser 	= require('cookie-parser');
 let bodyParser   	= require('body-parser');
 let session      	= require('express-session');
 let mongoose		= require('mongoose')
+let WebSocket 		= require('ws')
 
 
 /*instantiate our application*/
 let app 		= express()
-let http		= require('http').Server(app);
-let WebSocket 	= require('ws')
-let io 			= require('socket.io')(http);
+let server 		= require('http').createServer(app);
+let wss 		= new WebSocket.Server({ server , port : 8080});
+
 
 /*local includes*/
 let api 	= require(__dirname + "/api.js")
@@ -87,8 +88,6 @@ app.get('/logout', function(req, res) {
 
 
 
-
-
 var token = config.token
 var wsURI = 'wss://stream.watsonplatform.net/speech-to-text/api/v1/recognize?watson-token=' +
   token + '&model=es-ES_BroadbandModel';
@@ -121,12 +120,12 @@ ws.on('open', function open() {
 app.use('/api', api)
 
 /*we direct all oure socket.io calls to this function*/
-sio.use(io)
+sio.use(wss)
 
 
 
 
 
-http.listen( PORT , function(){
+app.listen( PORT , function(){
   console.log('listening on 3000');
 });
