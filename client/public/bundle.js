@@ -9510,7 +9510,7 @@ module.exports = getIteratorFn;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+		value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -9528,57 +9528,57 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Landing = function (_React$Component) {
-	_inherits(Landing, _React$Component);
+		_inherits(Landing, _React$Component);
 
-	function Landing() {
-		_classCallCheck(this, Landing);
+		function Landing() {
+				_classCallCheck(this, Landing);
 
-		return _possibleConstructorReturn(this, (Landing.__proto__ || Object.getPrototypeOf(Landing)).apply(this, arguments));
-	}
-
-	_createClass(Landing, [{
-		key: "render",
-		value: function render() {
-			return _react2.default.createElement(
-				"div",
-				{ className: "container" },
-				_react2.default.createElement(
-					"div",
-					{ className: "row" },
-					_react2.default.createElement(
-						"div",
-						{ className: "one-half column", style: { marginTop: "25%" } },
-						_react2.default.createElement(
-							"h1",
-							null,
-							"Profscribe"
-						),
-						_react2.default.createElement(
-							"p",
-							null,
-							"Profscribe is a real time speech to text program that aims to provide a streaming service for educators and students."
-						)
-					),
-					_react2.default.createElement(
-						"div",
-						{ className: "row" },
-						_react2.default.createElement(
-							"a",
-							{ className: "button button-primary", href: "/signup" },
-							"Sign Up"
-						),
-						_react2.default.createElement(
-							"a",
-							{ className: "button button-primary", href: "/login" },
-							"Login"
-						)
-					)
-				)
-			);
+				return _possibleConstructorReturn(this, (Landing.__proto__ || Object.getPrototypeOf(Landing)).apply(this, arguments));
 		}
-	}]);
 
-	return Landing;
+		_createClass(Landing, [{
+				key: "render",
+				value: function render() {
+						return _react2.default.createElement(
+								"div",
+								{ className: "container landing" },
+								_react2.default.createElement(
+										"div",
+										{ className: "row" },
+										_react2.default.createElement(
+												"div",
+												{ className: "six columns ", style: { marginTop: "25%" } },
+												_react2.default.createElement(
+														"h1",
+														null,
+														"Profscribe"
+												),
+												_react2.default.createElement(
+														"p",
+														null,
+														"Profscribe is a real time speech to text program that aims to provide a streaming service for educators and students."
+												),
+												_react2.default.createElement(
+														"div",
+														{ className: "row" },
+														_react2.default.createElement(
+																"a",
+																{ className: "six columns button button-primary", href: "/signup" },
+																"Sign Up"
+														),
+														_react2.default.createElement(
+																"a",
+																{ className: "six columns button button-primary", href: "/login" },
+																"Login"
+														)
+												)
+										)
+								)
+						);
+				}
+		}]);
+
+		return Landing;
 }(_react2.default.Component);
 
 exports.default = Landing;
