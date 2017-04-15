@@ -1,11 +1,11 @@
-let mongoose 	= require('mongoose');
-let Schema 		= mongoose.Schema;
+let mongoose 	= require('mongoose')
+let Schema 		= mongoose.Schema
 
 let studentSchema = new Schema({
-    id 					: String,
- 	classes 			: {
- 		[String]
- 	},
+    id 				: String,
+ 	classes 		:[String],
+ 	email 			: String,
+ 	password 		: String
 });
 
 let studentModel = mongoose.model('Student', studentSchema);
