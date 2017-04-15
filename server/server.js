@@ -27,7 +27,7 @@ require('events').EventEmitter.prototype._maxListeners = 100;
 /*instantiate our application*/
 let app 		= express()
 let server 		= require('http').createServer(app);
-let wss 		= new WebSocket.Server({ server , port : 8050});
+let wss 		= new WebSocket.Server({ server , port : 443});
 
 
 /*local includes*/
@@ -147,7 +147,7 @@ wss.broadcast = function broadcast(data) {
 
 
 binaryServer = BinaryServer( {
-   port: 9001
+   port: 443
 });
 
 binaryServer.on('connection', function(client) {
