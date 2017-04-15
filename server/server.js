@@ -88,6 +88,7 @@ app.get('/logout', function(req, res) {
 
 
 
+/*
 var token = config.token
 var wsURI = 'wss://stream.watsonplatform.net/speech-to-text/api/v1/recognize?watson-token=' +
   token + '&model=es-ES_BroadbandModel';
@@ -113,7 +114,7 @@ ws.on('open', function open() {
 
 
 
-
+*/
 
 
 /*we direct all our api calls to our /api routes */
