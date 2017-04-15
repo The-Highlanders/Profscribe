@@ -10,8 +10,6 @@ router.post('/professor/cc', isLoggedIn, function(req, res){
 	// if the professor is logged in, then we gucci
 })
 
-
-
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
 
