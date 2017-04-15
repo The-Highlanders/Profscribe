@@ -12,12 +12,6 @@ class App extends React.Component {
 				</div>
 			)
  	}
-
- 	componentDidMount(){
-
- 
- 	}
-
 }
 
 ReactDOM.render(<App/>, document.getElementById('app'));
