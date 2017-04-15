@@ -9561,10 +9561,7 @@ var App = function (_React$Component) {
 		}
 	}, {
 		key: 'componentDidMount',
-		value: function componentDidMount() {
-			// this would go in our user o
-			var socket = io();
-		}
+		value: function componentDidMount() {}
 	}]);
 
 	return App;

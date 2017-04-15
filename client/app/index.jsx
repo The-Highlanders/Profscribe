@@ -15,8 +15,8 @@ class App extends React.Component {
  	}
 
  	componentDidMount(){
- 		// this would go in our user o
- 		var socket = io();
+
+ 
  	}
 
 }
